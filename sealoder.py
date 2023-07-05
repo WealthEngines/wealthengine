@@ -14,7 +14,10 @@ class DownloadSeaFile:
         self.client = seafileapi.connect(server_link, username, password)
 
     def _write_file(self, to_path, file_name, file_obj):
-        with open(f'{to_path}/{file_name}', 'wb') as files:
+        file_path = f'{to_path}/{file_name}'
+        if os.path.exists(file_path):
+            return
+        with open(file_path, 'wb') as files:
             files.write(file_obj.get_content())
 
     def download_folder(self, folder, to_path, single_file=None):
